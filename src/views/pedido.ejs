@@ -1,0 +1,216 @@
+<%- include('./header.ejs') -%>
+
+<body class="p-3 mb-2 bg-light text-dark">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand">Waiter</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Cardápio</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="chef.html">Pagina do Chef</a>
+                  </li>
+                </ul>
+             </div>
+            </div>
+        </nav>
+    </header>
+  <div class="container mt-5">
+        <h1 class="text-center">Anotar Pedido</h1>
+        <form id="order-form">
+            <!-- Seção de Pratos -->
+            <div id="order-dishes">
+                <h2>Pratos</h2>
+                <div class="order-item mb-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <label for="dish-select" class="form-label">Prato</label>
+                            <select class="form-select dish-select" required>
+                                <option value="" disabled selected>Selecione um prato</option>
+                                <option value="Carne Grelhada com salada">Carne Grelhada com salada</option>
+                                <option value="Feijoada">Feijoada</option>
+                                <option value="Peixe Grelhado">Peixe Grelhado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="dish-quantity" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control dish-quantity" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dish-observation" class="form-label">Observação</label>
+                            <input type="text" class="form-control dish-observation" placeholder="Observação">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mb-3" id="add-dish">Adicionar Outro Prato</button>
+
+            <!-- Seção de Bebidas -->
+            <div id="order-drinks">
+                <h2>Bebidas</h2>
+                <div class="order-item mb-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <label for="drink-select" class="form-label">Bebida</label>
+                            <select class="form-select drink-select" required>
+                                <option value="" disabled selected>Selecione uma bebida</option>
+                                <option value="Água">Água</option>
+                                <option value="Coca-cola zero">Coca-cola zero</option>
+                                <option value="Suco de Laranja">Suco de Laranja</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="drink-quantity" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control drink-quantity" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="drink-observation" class="form-label">Observação</label>
+                            <input type="text" class="form-control drink-observation" placeholder="Observação">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mb-3" id="add-drink">Adicionar Outra Bebida</button>
+
+            <!-- Seção de Sobremesas -->
+            <div id="order-desserts">
+                <h2>Sobremesas</h2>
+                <div class="order-item mb-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <label for="dessert-select" class="form-label">Sobremesa</label>
+                            <select class="form-select dessert-select" required>
+                                <option value="" disabled selected>Selecione uma sobremesa</option>
+                                <option value="Cheesecake de blueberry">Cheesecake de blueberry</option>
+                                <option value="Bolo de Canela">Bolo de Canela</option>
+                                <option value="Petit Gâteau">Petit Gâteau</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="dessert-quantity" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control dessert-quantity" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dessert-observation" class="form-label">Observação</label>
+                            <input type="text" class="form-control dessert-observation" placeholder="Observação">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mb-3" id="add-dessert">Adicionar Outra Sobremesa</button>
+
+            <!-- Campos de Mesa e Comanda -->
+            <div class="mb-3">
+                <label for="table" class="form-label">Mesa</label>
+                <input type="number" class="form-control" id="table" required>
+            </div>
+            <div class="mb-3">
+                <label for="order-number" class="form-label">Comanda</label>
+                <input type="text" class="form-control" id="order-number" required>
+            </div>
+            <button type="submit" class="btn btn-success">Enviar Pedido</button>
+        </form>
+    </div>
+
+    <script>
+        // Função para adicionar novos itens de prato
+        document.getElementById('add-dish').addEventListener('click', function () {
+            const orderDishes = document.getElementById('order-dishes');
+            const orderItem = document.querySelector('.order-item').cloneNode(true);
+            orderItem.querySelector('.dish-select').value = '';
+            orderItem.querySelector('.dish-quantity').value = 1;
+            orderItem.querySelector('.dish-observation').value = '';
+            orderDishes.appendChild(orderItem);
+        });
+
+        // Função para adicionar novas bebidas
+        document.getElementById('add-drink').addEventListener('click', function () {
+            const orderDrinks = document.getElementById('order-drinks');
+            const orderItem = document.querySelector('.order-item').cloneNode(true);
+            orderItem.querySelector('.drink-select').value = '';
+            orderItem.querySelector('.drink-quantity').value = 1;
+            orderItem.querySelector('.drink-observation').value = '';
+            orderDrinks.appendChild(orderItem);
+        });
+
+        // Função para adicionar novas sobremesas
+        document.getElementById('add-dessert').addEventListener('click', function () {
+            const orderDesserts = document.getElementById('order-desserts');
+            const orderItem = document.querySelector('.order-item').cloneNode(true);
+            orderItem.querySelector('.dessert-select').value = '';
+            orderItem.querySelector('.dessert-quantity').value = 1;
+            orderItem.querySelector('.dessert-observation').value = '';
+            orderDesserts.appendChild(orderItem);
+        });
+
+        // Submissão do formulário
+        document.getElementById('order-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(document.getElementById('order-form'));
+            
+            const orderData = {
+                table: formData.get('table'),
+                orderNumber: formData.get('order-number'),
+                dishes: [],
+                drinks: [],
+                desserts: []
+            };
+
+            document.querySelectorAll('#order-dishes .order-item').forEach(item => {
+                orderData.dishes.push({
+                    dish: item.querySelector('.dish-select').value,
+                    quantity: item.querySelector('.dish-quantity').value,
+                    observation: item.querySelector('.dish-observation').value
+                });
+            });
+
+            document.querySelectorAll('#order-drinks .order-item').forEach(item => {
+                orderData.drinks.push({
+                    drink: item.querySelector('.drink-select').value,
+                    quantity: item.querySelector('.drink-quantity').value,
+                    observation: item.querySelector('.drink-observation').value
+                });
+            });
+
+            document.querySelectorAll('#order-desserts .order-item').forEach(item => {
+                orderData.desserts.push({
+                    dessert: item.querySelector('.dessert-select').value,
+                    quantity: item.querySelector('.dessert-quantity').value,
+                    observation: item.querySelector('.dessert-observation').value
+                });
+            });
+
+            // Enviar os dados para o servidor
+            try {
+                const response = await fetch('http://127.0.0.1:3306', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (response.ok) {
+                    alert('Pedido enviado com sucesso!');
+                    document.getElementById('order-form').reset();
+                } else {
+                    alert('Erro ao enviar o pedido.');
+                }
+            } catch (error) {
+                alert('Erro ao enviar o pedido.');
+                console.error('Error:', error);
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+</body>
+</html>
